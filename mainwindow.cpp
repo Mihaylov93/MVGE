@@ -2,11 +2,14 @@
 #include "./ui_mainwindow.h"
 #include <QtDebug>
 #include <QMetaEnum>
+#include "udphandler.hpp"
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     this->setGeometry(0, 0, 320, 240);
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
+
+    _udpHandler = new UDPHandler("usb0", 3000, this);
 }
 
 MainWindow::~MainWindow()
@@ -16,8 +19,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *iKeyEvent)
 {
-    const QString mkey(QMetaEnum::fromType<Qt::Key>().valueToKey(iKeyEvent->key()));
-    qDebug() << "Key: " << mkey << "Pressed!";
+    const QString mKey(QMetaEnum::fromType<Qt::Key>().valueToKey(iKeyEvent->key()));
+    qDebug() << "Key: " << mKey << "Pressed!";
     switch (iKeyEvent->key()) {
         case Qt::Key_Up:
             ui->pbUp->setChecked(true);
@@ -54,14 +57,15 @@ void MainWindow::keyPressEvent(QKeyEvent *iKeyEvent)
             break;
         default:
             Q_ASSERT_X(false, "MainWindow::keyPressEvent - default case: No implementation for ",
-                       mkey.toStdString().c_str());
+                       mKey.toStdString().c_str());
     }
+    _udpHandler->broadcastData(mKey + ":1");
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *iKeyEvent)
 {
-    const QString mkey(QMetaEnum::fromType<Qt::Key>().valueToKey(iKeyEvent->key()));
-    qDebug() << "Key: " << mkey << "Released!";
+    const QString mKey(QMetaEnum::fromType<Qt::Key>().valueToKey(iKeyEvent->key()));
+    qDebug() << "Key: " << mKey << "Released!";
     switch (iKeyEvent->key()) {
         case Qt::Key_Up:
             ui->pbUp->setChecked(false);
@@ -98,6 +102,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *iKeyEvent)
             break;
         default:
             Q_ASSERT_X(false, "MainWindow::keyReleaseEvent - default case: No implementation for ",
-                       mkey.toStdString().c_str());
+                       mKey.toStdString().c_str());
     }
+    _udpHandler->broadcastData(mKey + ":0");
 }

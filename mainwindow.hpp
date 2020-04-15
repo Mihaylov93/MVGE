@@ -9,6 +9,7 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+class UDPHandler;
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -21,4 +22,5 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+    UDPHandler *_udpHandler;
 };
