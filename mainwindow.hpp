@@ -2,6 +2,10 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QSettings>
+
+#define kIFACE_SETTING "iface"
+#define kPORT_SETTING "port"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,4 +27,8 @@ public slots:
 private:
     Ui::MainWindow *ui;
     UDPHandler *_udpHandler;
+    QString _settingsFile;
+    QSettings *_settings;
+    int _bindPort;
+    QString _ifaceName;
 };
