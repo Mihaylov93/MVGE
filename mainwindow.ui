@@ -139,48 +139,6 @@ QPushButton:checked {
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pbStart">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>18</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>18</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
-    background-color: grey;
-    border-style: outset;
-    border-width: 1px;
-    border-radius: 9px;
-    border-color: black;
-    padding: 1px;
-}
-QPushButton:checked {
-	background-color: rgb(58, 58, 58);
-}
-</string>
-        </property>
-        <property name="text">
-         <string>Start</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="pbSelect">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -216,6 +174,48 @@ QPushButton:checked {
         </property>
         <property name="text">
          <string>Select</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pbStart">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>18</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>18</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: grey;
+    border-style: outset;
+    border-width: 1px;
+    border-radius: 9px;
+    border-color: black;
+    padding: 1px;
+}
+QPushButton:checked {
+	background-color: rgb(58, 58, 58);
+}
+</string>
+        </property>
+        <property name="text">
+         <string>Start</string>
         </property>
         <property name="checkable">
          <bool>true</bool>

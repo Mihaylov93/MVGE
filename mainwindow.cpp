@@ -3,6 +3,7 @@
 #include <QtDebug>
 #include <QMetaEnum>
 #include "udphandler.hpp"
+#include <QMessageBox>
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -10,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint);
 
     _udpHandler = new UDPHandler("usb0", 3000, this);
+
+    this->setFocus();
 }
 
 MainWindow::~MainWindow()
@@ -52,12 +55,12 @@ void MainWindow::keyPressEvent(QKeyEvent *iKeyEvent)
         case Qt::Key_Space:
             ui->pbSelect->setChecked(true);
             break;
-        case Qt::Key_Enter:
+        case Qt::Key_Return:
             ui->pbStart->setChecked(true);
             break;
-        default:
-            Q_ASSERT_X(false, "MainWindow::keyPressEvent - default case: No implementation for ",
-                       mKey.toStdString().c_str());
+            /*default:
+                Q_ASSERT_X(false, "MainWindow::keyPressEvent - default case: No implementation for ",
+                           mKey.toStdString().c_str());*/
     }
     _udpHandler->broadcastData(mKey + ":1");
 }
@@ -97,12 +100,22 @@ void MainWindow::keyReleaseEvent(QKeyEvent *iKeyEvent)
         case Qt::Key_Space:
             ui->pbSelect->setChecked(false);
             break;
-        case Qt::Key_Enter:
+        case Qt::Key_Return:
             ui->pbStart->setChecked(false);
             break;
-        default:
-            Q_ASSERT_X(false, "MainWindow::keyReleaseEvent - default case: No implementation for ",
-                       mKey.toStdString().c_str());
+        // Shift+menu to exit
+        case Qt::Key_Backspace:
+            ui->pbStart->setChecked(false);
+
+            const QMessageBox::StandardButton mConfirm
+                = QMessageBox::question(this, "Exit MVGE?", "Press [Start] to confirm, or [Menu] to cancel.",
+                                        QMessageBox::Yes | QMessageBox::No);
+            if (mConfirm == QMessageBox::Yes) QApplication::quit();
+
+            break;
+            /*default:
+                Q_ASSERT_X(false, "MainWindow::keyReleaseEvent - default case: No implementation for ",
+                           mKey.toStdString().c_str());*/
     }
     _udpHandler->broadcastData(mKey + ":0");
 }
